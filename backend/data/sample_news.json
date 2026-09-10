@@ -1,0 +1,27 @@
+[
+  {
+    "id": "news_001",
+    "text": "Rotterdam port strike causes major shipping delays.",
+    "expected_disruption_type": "PORT_STRIKE"
+  },
+  {
+    "id": "news_002",
+    "text": "A severe earthquake near Busan has damaged port infrastructure and halted operations.",
+    "expected_disruption_type": "NATURAL_DISASTER"
+  },
+  {
+    "id": "news_003",
+    "text": "Pearl River Manufacturing Factory announces indefinite production halt after a critical fire.",
+    "expected_disruption_type": "FACTORY_SHUTDOWN"
+  },
+  {
+    "id": "news_004",
+    "text": "Munich Precision Parts files for bankruptcy amid supplier collapse concerns.",
+    "expected_disruption_type": "SUPPLIER_FAILURE"
+  },
+  {
+    "id": "news_005",
+    "text": "Shenzhen Electronics Co reports a ransomware cyberattack disrupting order systems.",
+    "expected_disruption_type": "CYBER_ATTACK"
+  }
+]

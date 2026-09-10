@@ -1,0 +1,107 @@
+{
+  "_comment": "SYNTHETIC / MOCK demo data for AtmoGraph MVP. Not real-world supply-chain data.",
+  "countries": [
+    {"id": "country_nl", "name": "Netherlands"},
+    {"id": "country_de", "name": "Germany"},
+    {"id": "country_cn", "name": "China"},
+    {"id": "country_us", "name": "United States"},
+    {"id": "country_vn", "name": "Vietnam"},
+    {"id": "country_kr", "name": "South Korea"}
+  ],
+  "ports": [
+    {"id": "port_rotterdam", "name": "Port of Rotterdam", "country_id": "country_nl"},
+    {"id": "port_shanghai", "name": "Port of Shanghai", "country_id": "country_cn"},
+    {"id": "port_hamburg", "name": "Port of Hamburg", "country_id": "country_de"},
+    {"id": "port_losangeles", "name": "Port of Los Angeles", "country_id": "country_us"},
+    {"id": "port_busan", "name": "Port of Busan", "country_id": "country_kr"}
+  ],
+  "shipping_routes": [
+    {"id": "route_shanghai_rotterdam", "name": "Shanghai-Rotterdam Route", "from_port_id": "port_shanghai", "to_port_id": "port_rotterdam"},
+    {"id": "route_rotterdam_hamburg", "name": "Rotterdam-Hamburg Route", "from_port_id": "port_rotterdam", "to_port_id": "port_hamburg"},
+    {"id": "route_busan_losangeles", "name": "Busan-LA Route", "from_port_id": "port_busan", "to_port_id": "port_losangeles"},
+    {"id": "route_shanghai_losangeles", "name": "Shanghai-LA Route", "from_port_id": "port_shanghai", "to_port_id": "port_losangeles"}
+  ],
+  "suppliers": [
+    {"id": "supplier_shenzhen_electronics", "name": "Shenzhen Electronics Co", "country_id": "country_cn"},
+    {"id": "supplier_hanoi_textiles", "name": "Hanoi Textiles Ltd", "country_id": "country_vn"},
+    {"id": "supplier_seoul_semiconductors", "name": "Seoul Semiconductors Inc", "country_id": "country_kr"},
+    {"id": "supplier_munich_precision", "name": "Munich Precision Parts", "country_id": "country_de"}
+  ],
+  "manufacturers": [
+    {"id": "manufacturer_rhine_assembly", "name": "Rhine Valley Assembly Plant", "country_id": "country_de"},
+    {"id": "manufacturer_pearl_river_factory", "name": "Pearl River Manufacturing Factory", "country_id": "country_cn"},
+    {"id": "manufacturer_midwest_autoworks", "name": "Midwest AutoWorks", "country_id": "country_us"}
+  ],
+  "warehouses": [
+    {"id": "warehouse_rotterdam_dc", "name": "Rotterdam Distribution Center", "country_id": "country_nl"},
+    {"id": "warehouse_la_dc", "name": "Los Angeles Distribution Center", "country_id": "country_us"},
+    {"id": "warehouse_hamburg_dc", "name": "Hamburg Distribution Center", "country_id": "country_de"}
+  ],
+  "products": [
+    {"id": "product_smartphone_x", "name": "Smartphone X"},
+    {"id": "product_laptop_pro", "name": "Laptop Pro"},
+    {"id": "product_ev_battery_pack", "name": "EV Battery Pack"},
+    {"id": "product_apparel_line_a", "name": "Apparel Line A"}
+  ],
+  "companies": [
+    {"id": "company_nova_devices", "name": "Nova Devices Inc", "country_id": "country_us"},
+    {"id": "company_euro_auto_group", "name": "Euro Auto Group", "country_id": "country_de"},
+    {"id": "company_fashion_forward", "name": "Fashion Forward Retail", "country_id": "country_us"}
+  ],
+  "relationships": {
+    "SUPPLIES_TO": [
+      {"from": "supplier_shenzhen_electronics", "to": "manufacturer_pearl_river_factory", "product_id": "product_smartphone_x"},
+      {"from": "supplier_seoul_semiconductors", "to": "manufacturer_pearl_river_factory", "product_id": "product_smartphone_x"},
+      {"from": "supplier_seoul_semiconductors", "to": "manufacturer_midwest_autoworks", "product_id": "product_ev_battery_pack"},
+      {"from": "supplier_munich_precision", "to": "manufacturer_rhine_assembly", "product_id": "product_ev_battery_pack"},
+      {"from": "supplier_hanoi_textiles", "to": "company_fashion_forward", "product_id": "product_apparel_line_a"}
+    ],
+    "MANUFACTURES": [
+      {"from": "manufacturer_pearl_river_factory", "to": "product_smartphone_x"},
+      {"from": "manufacturer_pearl_river_factory", "to": "product_laptop_pro"},
+      {"from": "manufacturer_rhine_assembly", "to": "product_ev_battery_pack"},
+      {"from": "manufacturer_midwest_autoworks", "to": "product_ev_battery_pack"}
+    ],
+    "SHIPS_THROUGH": [
+      {"from": "manufacturer_pearl_river_factory", "to": "port_shanghai"},
+      {"from": "port_shanghai", "to": "route_shanghai_rotterdam"},
+      {"from": "route_shanghai_rotterdam", "to": "port_rotterdam"},
+      {"from": "port_rotterdam", "to": "route_rotterdam_hamburg"},
+      {"from": "route_rotterdam_hamburg", "to": "port_hamburg"},
+      {"from": "port_shanghai", "to": "route_shanghai_losangeles"},
+      {"from": "route_shanghai_losangeles", "to": "port_losangeles"},
+      {"from": "port_busan", "to": "route_busan_losangeles"},
+      {"from": "route_busan_losangeles", "to": "port_losangeles"}
+    ],
+    "LOCATED_IN": [
+      {"from": "port_rotterdam", "to": "country_nl"},
+      {"from": "port_shanghai", "to": "country_cn"},
+      {"from": "port_hamburg", "to": "country_de"},
+      {"from": "port_losangeles", "to": "country_us"},
+      {"from": "port_busan", "to": "country_kr"},
+      {"from": "warehouse_rotterdam_dc", "to": "country_nl"},
+      {"from": "warehouse_la_dc", "to": "country_us"},
+      {"from": "warehouse_hamburg_dc", "to": "country_de"},
+      {"from": "supplier_shenzhen_electronics", "to": "country_cn"},
+      {"from": "supplier_hanoi_textiles", "to": "country_vn"},
+      {"from": "supplier_seoul_semiconductors", "to": "country_kr"},
+      {"from": "supplier_munich_precision", "to": "country_de"},
+      {"from": "manufacturer_rhine_assembly", "to": "country_de"},
+      {"from": "manufacturer_pearl_river_factory", "to": "country_cn"},
+      {"from": "manufacturer_midwest_autoworks", "to": "country_us"}
+    ],
+    "DEPENDS_ON": [
+      {"from": "warehouse_rotterdam_dc", "to": "port_rotterdam"},
+      {"from": "warehouse_hamburg_dc", "to": "port_hamburg"},
+      {"from": "warehouse_la_dc", "to": "port_losangeles"},
+      {"from": "company_nova_devices", "to": "warehouse_la_dc"},
+      {"from": "company_euro_auto_group", "to": "manufacturer_rhine_assembly"},
+      {"from": "company_euro_auto_group", "to": "warehouse_hamburg_dc"},
+      {"from": "company_fashion_forward", "to": "warehouse_rotterdam_dc"}
+    ],
+    "CONNECTED_TO": [
+      {"from": "port_rotterdam", "to": "port_hamburg"},
+      {"from": "port_shanghai", "to": "port_busan"}
+    ]
+  }
+}
