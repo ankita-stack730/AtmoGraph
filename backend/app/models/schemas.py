@@ -13,7 +13,7 @@ from pydantic import BaseModel, Field
 # ---------------------------------------------------------------------------
 
 class GraphNode(BaseModel):
-    id: str
+    node_id: str
     labels: List[str] = Field(default_factory=list)
     name: Optional[str] = None
     properties: dict = Field(default_factory=dict)

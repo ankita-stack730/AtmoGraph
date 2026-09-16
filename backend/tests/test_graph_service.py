@@ -39,7 +39,7 @@ def test_find_nodes_by_name_delegates_to_neo4j():
     with patch("app.graph.graph_service.neo4j_client.run_query", return_value=[fake_node]):
         results = graph_service.find_nodes_by_name("Rotterdam")
     assert len(results) == 1
-    assert results[0].id == "port_rotterdam"
+    assert results[0].node_id == "port_rotterdam"
     assert results[0].name == "Port of Rotterdam"
 
 

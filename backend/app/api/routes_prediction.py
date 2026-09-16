@@ -1,30 +1,69 @@
 """
 GNN prediction endpoints.
 
-PHASE 1 STATUS: stubs only. The GNN does not exist yet (that's Phase 6).
-These return HTTP 501 with a clear explanation rather than fake numbers,
-per Section 17 ("do not generate fake implementation claims").
+Provides node-level ripple-risk predictions from the trained
+AtmoGraph GraphSAGE model.
 """
+
 from fastapi import APIRouter, HTTPException
 
-router = APIRouter(tags=["prediction"])
+from app.graph import graph_service
+from app.ml.inference import graphsage_inference
 
-_NOT_YET_IMPLEMENTED = (
-    "The GNN model has not been trained yet (Phase 6 of the roadmap). "
-    "Use POST /disruption/analyze for the current graph-baseline risk propagation."
-)
+router = APIRouter(tags=["prediction"])
 
 
 @router.post("/predict")
 def predict():
-    raise HTTPException(status_code=501, detail=_NOT_YET_IMPLEMENTED)
+    """Run GraphSAGE inference on the current supply-chain graph."""
+
+    if not graphsage_inference.is_available():
+        raise HTTPException(
+            status_code=503,
+            detail="Trained GraphSAGE model is not available.",
+        )
+
+    try:
+        snapshot = graph_service.get_full_graph()
+
+        predictions = graphsage_inference.predict(
+            snapshot=snapshot,
+        )
+
+        return {
+            "predictions": predictions,
+            "node_count": len(predictions),
+            "method": "GRAPHSAGE",
+        }
+
+    except Exception as exc:
+        raise HTTPException(
+            status_code=500,
+            detail=f"GNN prediction failed: {exc}",
+        ) from exc
 
 
 @router.get("/risk/nodes")
 def risk_nodes():
-    raise HTTPException(status_code=501, detail=_NOT_YET_IMPLEMENTED)
+    """Return GraphSAGE risk scores for all graph nodes."""
+
+    return predict()
 
 
 @router.get("/risk/timeline")
 def risk_timeline():
-    raise HTTPException(status_code=501, detail=_NOT_YET_IMPLEMENTED)
+    """
+    Timeline endpoint placeholder.
+
+    A true temporal prediction requires timestamped disruption
+    scenarios, which are not currently part of the trained model.
+    """
+
+    raise HTTPException(
+        status_code=501,
+        detail=(
+            "Risk timeline is not implemented because the current "
+            "GraphSAGE model performs node-level risk prediction "
+            "without temporal forecasting."
+        ),
+    )

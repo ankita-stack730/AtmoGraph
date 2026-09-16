@@ -34,8 +34,13 @@ type SupplyNodeData = {
   dimmed: boolean;
 };
 
-function SupplyNode({ data }: NodeProps) {
+function SupplyNode({ data, id }: NodeProps) {
   const d = data as unknown as SupplyNodeData;
+
+  if (!id) {
+    console.error("SupplyNode received no React Flow node id", data);
+    return null;
+  }
   const accent = colorForLabel(d.label);
   const risk = d.risk;
   const halo = risk === null ? null : RISK_HEX[riskBand(risk)];

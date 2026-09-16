@@ -24,7 +24,7 @@ logger = logging.getLogger("atmograph.graph_service")
 def _neo4j_node_to_schema(node: Neo4jNode) -> GraphNode:
     props = dict(node)
     return GraphNode(
-        id=props.get("id", str(node.element_id)),
+        node_id=props.get("id", str(node.element_id)),
         labels=list(node.labels),
         name=props.get("name"),
         properties=props,
@@ -46,10 +46,10 @@ def get_full_graph() -> GraphSnapshot:
 
         if n is not None:
             node_schema = _neo4j_node_to_schema(n)
-            nodes_by_id[node_schema.id] = node_schema
+            nodes_by_id[node_schema.node_id] = node_schema
         if m is not None:
             node_schema = _neo4j_node_to_schema(m)
-            nodes_by_id[node_schema.id] = node_schema
+            nodes_by_id[node_schema.node_id] = node_schema
         if r is not None and n is not None and m is not None:
             relationships.append(
                 GraphRelationship(

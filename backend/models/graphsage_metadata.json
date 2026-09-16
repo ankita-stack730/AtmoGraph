@@ -1,0 +1,41 @@
+{
+  "model_architecture": "AtmoGraphGraphSAGE",
+  "in_channels": 14,
+  "hidden_channels": 32,
+  "num_layers": 2,
+  "dropout": 0.2,
+  "seed": 42,
+  "loss_function": "BCEWithLogitsLoss",
+  "optimizer": "Adam",
+  "learning_rate": 0.01,
+  "weight_decay": 0.0005,
+  "epochs_configured": 150,
+  "best_epoch": 15,
+  "early_stopped": true,
+  "scenario_counts": {
+    "total": 56,
+    "train": 39,
+    "validation": 8,
+    "test": 9
+  },
+  "train_val_test_split": [
+    0.7,
+    0.15,
+    0.15
+  ],
+  "metrics": {
+    "train_loss": 0.3175,
+    "validation_loss": 0.3285,
+    "test": {
+      "mae": 0.0301,
+      "rmse": 0.05,
+      "r2": 0.9299,
+      "n_predictions": 288
+    }
+  },
+  "trained_at": "2026-09-16T07:25:24.373053+00:00",
+  "torch_version": "2.4.1+cpu",
+  "torch_geometric_version": "2.6.0",
+  "synthetic_training_data": true,
+  "disclaimer": "Trained on synthetic disruption scenarios generated from the demo AtmoGraph supply-chain topology (see app/ml/scenarios.py). Not real-world historical data; metrics reflect fit to the synthetic simulation, not production forecasting accuracy."
+}
